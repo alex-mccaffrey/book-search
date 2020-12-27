@@ -1,50 +1,35 @@
-import React, { Component } from 'react;'
+import React, { Component } from 'react';
 import './App.css';
 
 import SearchBox from './components/SearchBox';
 import Filters from './components/Filters';
+import BookList from './components/BookList';
 
 
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      search: "",
-      printType: 'All',
-      bookType: null,
-      bookList: []
-    }
+  state = {
+    search: "belgian-malinois",
+    printType: 'All',
+    bookType: null,
+    bookList: []
   }
 
-  componentDidMount() {
-    const url = 'https://www.googleapis.com/books/v1/volumes?q=';
-    const options = {
-      method: 'GET',
-      headers: {
-        "key": "AIzaSyAPZeJuO041U_sVRHEcBQI8epg3vEBiFkg",
-      }
-    };
+  changeSearch = () => {
+    this.setState({})
+  }
 
-    fetch(url, options)
-      .then(res => {
-        if (!res.ok) {
-          throw new Error('Something went wrong, please try again later.');
-        }
-        return res;
-      })
-      .then(res => res.json())
-      .then(data => {
-        this.setState({
-          bookmarks: data,
-          error: null
-        });
-      })
-      .catch(err => {
-        this.setState({
-          error: err.message
-        });
-      });
+  searchBooks = () => {
+    const url = `https://www.googleapis.com/books/v1/volumes?q=${this.state.search}`;
+    console.log(`the url is ${url}`)
+    fetch(url)
+      .then((res) => res.json())
+      .then((res) => this.setState({ bookList: res.items }));
+  };
+
+
+  componentDidMount() {
+    this.searchBooks();
   }
 
 
@@ -53,9 +38,10 @@ class App extends Component {
       <div className="App">
         <SearchBox search={this.state.search} />
         <Filters
+          bookList={this.state.bookList}
           printType={this.state.printType}
           bookType={this.state.bookType} />
-        <BookList bookList={this.state.bookList}/>
+        <BookList bookList={this.state.bookList} />
       </div>
     );
   }
