@@ -9,14 +9,15 @@ import BookList from './components/BookList';
 
 class App extends Component {
   state = {
-    search: "belgian-malinois",
+    search: " ",
     printType: 'All',
     bookType: null,
     bookList: []
   }
 
-  changeSearch = () => {
-    this.setState({})
+  changeSearch = (term) => {
+    this.setState({ search: term })
+    this.searchBooks()
   }
 
   searchBooks = () => {
@@ -36,7 +37,10 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <SearchBox search={this.state.search} />
+        <SearchBox 
+        change = {this.changeSearch}
+        search={this.state.search}
+        submit={this.searchBooks} />
         <Filters
           bookList={this.state.bookList}
           printType={this.state.printType}

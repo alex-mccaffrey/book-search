@@ -1,14 +1,17 @@
 import React, { Component } from 'react'
 
-export class Filters extends Component {
+ class Filters extends Component {
+   
+
     render() {
         return (
             <form>
                 <label>Print Type: </label>
-                <select name="printType" id="printType" value={this.props.printType} onChange={(e) => this.setState({printType: e.target.value})}>
-                <option>All</option>
-                <option>Book</option>
-                <option>Magazine</option>
+                <select name="printType" id="printType"  defaultValue={this.props.selectValue} 
+                onChange={this.handleChange} >
+                <option value='All'>All</option>
+                <option value='Book'>Book</option>
+                <option value='Magazine'>Magazine</option>
                 </select>
 
                 <label>Book Type: </label>

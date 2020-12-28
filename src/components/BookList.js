@@ -23,12 +23,13 @@ export class BookList extends Component {
     render() {
         return (
             <ul>
-                {this.props.bookList.map((book) => (
+                {this.props.bookList?.map((book) => (
                 <li
                 key={book.id}>
                 <h1>{book.volumeInfo.title}</h1>
                 <p>Author: {book.volumeInfo.authors}</p>
-               <img src={book.volumeInfo.imageLinks.smallThumbnail}></img>
+               <img src={book.volumeInfo.imageLinks?.smallThumbnail}></img>
+               <p>Price: {book.saleInfo.retailPrice?.amount}</p>
                 </li>
                 ))}
             </ul>
